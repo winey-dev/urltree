@@ -1,4 +1,4 @@
-package tree
+package urltree
 
 import (
 	_ "strings"
@@ -14,5 +14,4 @@ func (t *Tree) SetData(path string, data interface{}) error {
 
 func setdata(node []Node, p []string, data interface{}) error {
 	return nil
-
 }
