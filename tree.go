@@ -22,7 +22,7 @@ func NewTree(name string) *Tree {
 	return tree
 }
 
-// func Make Not Data Set
+// Make Tree Not Data Set
 func (t *Tree) Make(method, path string) {
 	var i int = 0
 	if path == "" {
@@ -37,7 +37,7 @@ func (t *Tree) Make(method, path string) {
 	}
 
 	// POST /path/path => /path/path/POST
-	newPath := path + "/" + method
+	newPath := path + "/" + strings.ToUpper(method)
 
 	p := strings.Split(newPath, "/")
 	for i = 0; i < len(t.root); i++ {

@@ -6,11 +6,10 @@ import (
 
 // Special string
 type mark struct {
-	str string
-	m1  []byte
-	m2  []byte
-	m3  []byte
-	m4  []byte
+	m1 []byte
+	m2 []byte
+	m3 []byte
+	m4 []byte
 }
 
 var m = mark{
@@ -44,15 +43,8 @@ func (t *Tree) Printing() {
 	treeprinting(t.root, -1)
 }
 
-// node
-// 0depth node
-// 1depth 이상은  │   ├── node
-// 1depth 이상인데 child 1개인 경우 └──
-// depth 이상인데 child 2개 이상인 경우 ├── 에 마지막은 └──
-// ndepth 일경우 "│   " 가 앞에 n개 들어갸아함
-
 func de(d, idx, cur, chl int) {
-	//	fmt.Print(d, idx, cur, chl)
+
 	if d < 1 {
 		return
 	}
