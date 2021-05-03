@@ -70,14 +70,14 @@ func treeprinting(node []Node, d int) {
 			fmt.Println(node[i].Path)
 		} else {
 			de(d, i, cur, chl)
-			fmt.Printf("%s\n", node[i].Path)
-			/*
-				if i == cur-1 {
-					fmt.Printf("%s%s %s\n", m.String(3), m.String(2), root[i].Path)
-				} else {
-					fmt.Printf("%s%s %s\n", m.String(1), m.String(2), root[i].Path)
-				}
-			*/
+			//fmt.Printf("%s\n", node[i].Path)
+
+			if i == cur-1 {
+				fmt.Printf("%s%s %s\n", m.String(3), m.String(2), node[i].Path)
+			} else {
+				fmt.Printf("%s%s %s\n", m.String(1), m.String(2), node[i].Path)
+			}
+
 		}
 
 		if chl != 0 {

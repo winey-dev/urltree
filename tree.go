@@ -91,6 +91,65 @@ func tmake(node []Node, p []string) []Node {
 	return node
 }
 
+// input url 	: /user/session/admin
+// input method : GET
+// tree url 	: /user/*
+// tree method  : GET
+// tree url 	: /user/*
+// tree method  : *
+func (t *Tree) MatchURL(method, path string) (bool, string, string) {
+	var ok bool
+	var npath string
+	b := []byte(path)
+	if b[0] == '/' {
+		b = b[1:]
+		npath = string(b)
+	}
+
+	newPath := npath + "/" + strings.ToUpper(method)
+
+	p := strings.Split(newPath, "/")
+	if len(p) > 1 {
+		ok = matchurl(t.root, p)
+	} else {
+		ok = false
+	}
+
+	return ok, method, path
+}
+
+func matchurl(node []Node, p []string) bool {
+	var ok bool
+	var i int
+
+	for i = 0; i < len(node); i++ {
+		if node[i].Path == p[0] || node[i].Path == "*" {
+			ok = true
+			break
+		}
+	}
+
+	if i == len(node) {
+		return false
+	}
+
+	if len(p) > 1 {
+		if node[i].Path == "*" {
+			p = p[len(p)-2:]
+		}
+		ok = matchurl(node[i].Child, p[1:])
+	}
+
+	return ok
+}
+
+func (t *Tree) Destroy() {
+	if treeArray == nil {
+		return
+	}
+	delete(treeArray, t.Name)
+}
+
 /*
 func (t *Tree) Del(path string) error   {}
 func del(node []Node, p []string) error {}
