@@ -16,9 +16,6 @@ type Tree struct {
 	root []Node
 }
 
-// Not Include Method OPTIONS, TRACE, CONNECT
-var Method = []string{"GET", "POST", "DELETE", "PUT", "PATCH", "HEAD"}
-
 func GetTree(name string) *Tree {
 	if name == "" {
 		return nil
