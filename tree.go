@@ -37,7 +37,7 @@ func NewTree(name string) *Tree {
 
 // Make Tree Not Data Set
 func (t *Tree) Make(method, path string) {
-	var i int = 0
+
 	if path == "" || method == "" {
 		return
 	}
@@ -53,19 +53,9 @@ func (t *Tree) Make(method, path string) {
 	newPath := path + "/" + strings.ToUpper(method)
 
 	p := strings.Split(newPath, "/")
-	for i = 0; i < len(t.root); i++ {
-		if t.root[i].Path == p[0] {
-			break
-		}
-	}
 
-	if i == len(t.root) {
-		t.root = append(t.root, Node{Path: p[0]})
-	}
+	t.root = tmake(t.root, p)
 
-	if len(p) != 1 {
-		t.root[i].Child = tmake(t.root[i].Child, p[1:])
-	}
 }
 
 func tmake(node []Node, p []string) []Node {
