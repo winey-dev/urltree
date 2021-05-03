@@ -6,45 +6,6 @@ import (
 )
 
 func main() {
-	//var strlist = []string{"DELETE", "PATCH"}
-	//p := strlist[len(strlist)-2:]
-	//fmt.Println(p)
-
-	/*
-		// TEST Make Tree And Get Tree Start ..
-		tree := urltree.NewTree("Default")
-		tree.Make("GET", "/em-ui/v1/user/:username")
-		tree.Make("PATCH", "/em-ui/v1/user/:username")
-		tree.Make("PUT", "/em-ui/v1/user/:username")
-		tree.Make("PUT", "/em-ui/v1/user/:username/:mapping")
-		tree.Make("PUT", "/em-ui/v1/user")
-		tree.Make("PUT", "/em-ui/v1/user/*")
-		tree.Make("*", "/em-ui/v1/*")
-		tree.Printing()
-
-		fmt.Println()
-		tree2 := urltree.NewTree("User")
-		tree2.Make("GET", "/em-ui/v1/user/:username")
-		tree2.Make("PATCH", "/em-ui/v1/user/:username")
-		tree2.Make("PUT", "/em-ui/v1/user/:username")
-		tree2.Make("PUT", "/em-ui/v1/user/:username/:mapping")
-		tree2.Make("PUT", "/em-ui/v1/user")
-		tree2.Make("PUT", "/em-ui/v1/user/*")
-		tree2.Printing()
-
-		t1 := urltree.GetTree("Default")
-		t2 := urltree.GetTree("User")
-		t1.Printing()
-		t2.Printing()
-		// TEST Make Tree And Get Tree END ..
-	*/
-	// TEST Matcing Tree
-
-	admintree := urltree.NewTree("Admin")
-	admintree.Make("*", "/*")
-	//admintree.Printing()
-	//fmt.Println()
-
 	utree := urltree.NewTree("User")
 	utree.Make("*", "/em-mmc/v1/*")
 	utree.Make("GET", "/em-config/v1/nf")

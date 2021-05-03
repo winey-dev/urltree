@@ -8,15 +8,12 @@ var treeArray map[string]*Tree
 
 type Node struct {
 	Path  string
-	Data  interface{}
 	Child []Node
 }
 
 type Tree struct {
-	Name    string
-	root    []Node
-	setHook func(method, path string, data interface{})
-	delHook func(method, path string, data interface{})
+	Name string
+	root []Node
 }
 
 // Not Include Method OPTIONS, TRACE, CONNECT
@@ -91,12 +88,6 @@ func tmake(node []Node, p []string) []Node {
 	return node
 }
 
-// input url 	: /user/session/admin
-// input method : GET
-// tree url 	: /user/*
-// tree method  : GET
-// tree url 	: /user/*
-// tree method  : *
 func (t *Tree) MatchURL(method, path string) (bool, string, string) {
 	var ok bool
 	var npath string
