@@ -40,6 +40,7 @@ func (t *Tree) Printing() {
 		return
 	}
 
+	fmt.Println(t.Name)
 	treeprinting(t.root, -1)
 }
 
@@ -54,30 +55,33 @@ func de(d, idx, cur, chl int) {
 	}
 }
 
-func treeprinting(root []Node, d int) {
+func treeprinting(node []Node, d int) {
 	var i int
 	var cur int /* Current Node Len */
 	var chl int /* Child Node Len */
 
 	d++
-	cur = len(root)
+	cur = len(node)
 
 	for i = 0; i < cur; i++ {
-		chl = len(root[i].Child)
+		chl = len(node[i].Child)
 
 		if d == 0 {
-			fmt.Println(root[i].Path)
+			fmt.Println(node[i].Path)
 		} else {
 			de(d, i, cur, chl)
-			if i == cur-1 {
-				fmt.Printf("%s%s %s\n", m.String(3), m.String(2), root[i].Path)
-			} else {
-				fmt.Printf("%s%s %s\n", m.String(1), m.String(2), root[i].Path)
-			}
+			fmt.Printf("%s\n", node[i].Path)
+			/*
+				if i == cur-1 {
+					fmt.Printf("%s%s %s\n", m.String(3), m.String(2), root[i].Path)
+				} else {
+					fmt.Printf("%s%s %s\n", m.String(1), m.String(2), root[i].Path)
+				}
+			*/
 		}
 
 		if chl != 0 {
-			treeprinting(root[i].Child, d)
+			treeprinting(node[i].Child, d)
 		}
 	}
 }
