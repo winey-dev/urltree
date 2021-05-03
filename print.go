@@ -40,7 +40,7 @@ func (t *Tree) Printing() {
 		return
 	}
 
-	fmt.Println(t.Name)
+	fmt.Println(t.name)
 	treeprinting(t.root, -1)
 }
 
@@ -64,24 +64,24 @@ func treeprinting(node []Node, d int) {
 	cur = len(node)
 
 	for i = 0; i < cur; i++ {
-		chl = len(node[i].Child)
+		chl = len(node[i].child)
 
 		if d == 0 {
-			fmt.Println(node[i].Path)
+			fmt.Println(node[i].path)
 		} else {
 			de(d, i, cur, chl)
 			//fmt.Printf("%s\n", node[i].Path)
 
 			if i == cur-1 {
-				fmt.Printf("%s%s %s\n", m.String(3), m.String(2), node[i].Path)
+				fmt.Printf("%s%s %s\n", m.String(3), m.String(2), node[i].path)
 			} else {
-				fmt.Printf("%s%s %s\n", m.String(1), m.String(2), node[i].Path)
+				fmt.Printf("%s%s %s\n", m.String(1), m.String(2), node[i].path)
 			}
 
 		}
 
 		if chl != 0 {
-			treeprinting(node[i].Child, d)
+			treeprinting(node[i].child, d)
 		}
 	}
 }

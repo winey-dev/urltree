@@ -7,12 +7,12 @@ import (
 var treeArray map[string]*Tree
 
 type Node struct {
-	Path  string
-	Child []Node
+	path  string
+	child []Node
 }
 
 type Tree struct {
-	Name string
+	name string
 	root []Node
 }
 
@@ -25,7 +25,7 @@ func GetTree(name string) *Tree {
 
 func NewTree(name string) *Tree {
 	tree := &Tree{
-		Name: name,
+		name: name,
 	}
 
 	if len(treeArray) == 0 {
@@ -35,7 +35,6 @@ func NewTree(name string) *Tree {
 	return tree
 }
 
-// Make Tree Not Data Set
 func (t *Tree) Make(method, path string) {
 
 	if path == "" || method == "" {
@@ -61,16 +60,16 @@ func (t *Tree) Make(method, path string) {
 func tmake(node []Node, p []string) []Node {
 	var i int
 	for i = 0; i < len(node); i++ {
-		if node[i].Path == p[0] {
+		if node[i].path == p[0] {
 			break
 		}
 	}
 	if i == len(node) {
-		node = append(node, Node{Path: p[0]})
+		node = append(node, Node{path: p[0]})
 	}
 
 	if len(p) != 1 {
-		node[i].Child = tmake(node[i].Child, p[1:])
+		node[i].child = tmake(node[i].child, p[1:])
 	}
 	return node
 }
@@ -101,7 +100,7 @@ func matchurl(node []Node, p []string) bool {
 	var i int
 
 	for i = 0; i < len(node); i++ {
-		if node[i].Path == p[0] || node[i].Path == "*" {
+		if node[i].path == p[0] || node[i].path == "*" {
 			ok = true
 			break
 		}
@@ -112,10 +111,10 @@ func matchurl(node []Node, p []string) bool {
 	}
 
 	if len(p) > 1 {
-		if node[i].Path == "*" {
+		if node[i].path == "*" {
 			p = p[len(p)-2:]
 		}
-		ok = matchurl(node[i].Child, p[1:])
+		ok = matchurl(node[i].child, p[1:])
 	}
 
 	return ok
@@ -125,7 +124,7 @@ func (t *Tree) Destroy() {
 	if treeArray == nil {
 		return
 	}
-	delete(treeArray, t.Name)
+	delete(treeArray, t.name)
 }
 
 /*
