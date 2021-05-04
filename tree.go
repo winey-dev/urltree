@@ -1,6 +1,7 @@
 package urltree
 
 import (
+	"regexp"
 	"strings"
 )
 
@@ -77,6 +78,7 @@ func tmake(node []Node, p []string) []Node {
 func (t *Tree) MatchURL(method, path string) (bool, string, string) {
 	var ok bool
 	var npath string
+
 	b := []byte(path)
 	if b[0] == '/' {
 		b = b[1:]
@@ -100,9 +102,22 @@ func matchurl(node []Node, p []string) bool {
 	var i int
 
 	for i = 0; i < len(node); i++ {
-		if node[i].path == p[0] || node[i].path == "*" {
+		if node[i].path == p[0] ||
+			node[i].path == "*" ||
+			node[i].path[0] == ':' {
 			ok = true
 			break
+		}
+
+		if node[i].path[0] != '*' && strings.Contains(node[i].path, "*") {
+			//  node path set '/user*'  match /username
+
+			ok, _ = regexp.MatchString(node[i].path, p[0])
+			if !ok {
+				continue
+			} else {
+				break
+			}
 		}
 	}
 
@@ -118,6 +133,10 @@ func matchurl(node []Node, p []string) bool {
 	}
 
 	return ok
+}
+
+func (t *Tree) Del(path string) {
+
 }
 
 func (t *Tree) Destroy() {
