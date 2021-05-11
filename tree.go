@@ -102,6 +102,11 @@ func matchurl(node []Node, p []string) bool {
 	var i int
 
 	for i = 0; i < len(node); i++ {
+		// p[0]가 method 인데 node[i].child 에 데이터가 잇으면 false 처리
+		if MethodCheck(p[0]) && len(node[i].child) > 0 {
+			continue
+		}
+
 		if node[i].path == p[0] ||
 			node[i].path == "*" ||
 			node[i].path[0] == ':' {
@@ -133,6 +138,24 @@ func matchurl(node []Node, p []string) bool {
 	}
 
 	return ok
+}
+
+func MethodCheck(method string) bool {
+	switch strings.ToUpper(method) {
+	case "GET":
+		return true
+	case "POST":
+		return true
+	case "DELETE":
+		return true
+	case "PATCH":
+		return true
+	case "PUT":
+		return true
+	case "HEAD":
+		return true
+	}
+	return false
 }
 
 func (t *Tree) Del(path string) {
