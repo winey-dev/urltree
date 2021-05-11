@@ -16,7 +16,7 @@ func main() {
 	utree.Make("GET", "/api/v1/config")
 	utree.Make("GET", "/api/v1/config/*")
 	utree.Make("*", "/api/v1/alert/:alertname")
-	utree.Make("POST", "/api/v1/alert/:alertname/*")
+	utree.Make("GET", "/api/v1/alert/:alertname/*")
 	utree.Printing()
 
 	var Method = []string{"POST", "GET", "DELETE", "PATCH"}
@@ -24,8 +24,10 @@ func main() {
 		"/api/v1/user",
 		"/api/v1/user/yiaw",
 		"/api/v1/alert/status",
+		"/api/v1/alert/status/moduleinfo",
 		"/api/v1/config",
-		"/api/v1/config/setting"}
+		"/api/v1/config/setting",
+	}
 
 	for i := 0; i < len(InputURL); i++ {
 		for j := 0; j < len(Method); j++ {

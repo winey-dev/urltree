@@ -105,7 +105,12 @@ func matchurl(node []Node, p []string) bool {
 		if node[i].path[0] == '$' { // $ Method Field
 			if node[i].path[1] == '*' || // * All Allowed Method
 				node[i].path == p[0] { // Perfect Method Matching
-				ok = true
+				if len(p) > 1 {
+					continue
+				} else {
+					ok = true
+
+				}
 				break
 			}
 		} else if node[i].path[0] == ':' || // : Dynamic Path
@@ -127,24 +132,6 @@ func matchurl(node []Node, p []string) bool {
 				break
 			}
 		}
-
-		// if node[i].path == p[0] ||
-		// 	node[i].path[0] == '*' ||
-		// 	node[i].path[0] == ':' {
-		// 	ok = true
-		// 	break
-		// }
-
-		// if node[i].path[0] != '*' && strings.Contains(node[i].path, "*") {
-		// 	//  node path set '/user*'  match /username
-
-		// 	ok, _ = regexp.MatchString(node[i].path, p[0])
-		// 	if !ok {
-		// 		continue
-		// 	} else {
-		// 		break
-		// 	}
-		// }
 	}
 
 	if i == len(node) {
@@ -167,10 +154,3 @@ func (t *Tree) Destroy() {
 	}
 	delete(treeArray, t.name)
 }
-
-/*
-func (t *Tree) Del(path string) error   {}
-func del(node []Node, p []string) error {}
-func (t *Tree) Draw(path string) Node {}
-func draw(node []Node, p []string) Node {}
-*/
