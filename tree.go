@@ -49,8 +49,8 @@ func (t *Tree) Make(method, path string) {
 		path = string(b)
 	}
 
-	// POST path/path => path/path/POST
-	newPath := path + "/" + strings.ToUpper(method)
+	// POST path/path => path/path/$POST
+	newPath := path + "/" + "$" + strings.ToUpper(method)
 
 	p := strings.Split(newPath, "/")
 
@@ -85,7 +85,7 @@ func (t *Tree) MatchURL(method, path string) (bool, string, string) {
 		npath = string(b)
 	}
 
-	newPath := npath + "/" + strings.ToUpper(method)
+	newPath := npath + "/" + "$" + strings.ToUpper(method)
 
 	p := strings.Split(newPath, "/")
 	if len(p) > 1 {
@@ -102,28 +102,49 @@ func matchurl(node []Node, p []string) bool {
 	var i int
 
 	for i = 0; i < len(node); i++ {
-		// p[0]가 method 인데 node[i].child 에 데이터가 잇으면 false 처리
-		if MethodCheck(p[0]) && len(node[i].child) > 0 {
-			continue
-		}
-
-		if node[i].path == p[0] ||
-			node[i].path == "*" ||
-			node[i].path[0] == ':' {
+		if node[i].path[0] == '$' { // $ Method Field
+			if node[i].path[1] == '*' || // * All Allowed Method
+				node[i].path == p[0] { // Perfect Method Matching
+				ok = true
+				break
+			}
+		} else if node[i].path[0] == ':' || // : Dynamic Path
+			node[i].path[0] == '*' {
+			if len(p) > 1 {
+				ok = true
+			} else {
+				continue
+			}
+			break
+		} else if node[i].path == p[0] { // Perfect Path Matching
 			ok = true
 			break
-		}
-
-		if node[i].path[0] != '*' && strings.Contains(node[i].path, "*") {
-			//  node path set '/user*'  match /username
-
-			ok, _ = regexp.MatchString(node[i].path, p[0])
-			if !ok {
+		} else if node[i].path[0] != '*' && strings.Contains(node[i].path, "*") {
+			// node path set '/user*'  match /username
+			if ok, _ = regexp.MatchString(node[i].path, p[0]); !ok {
 				continue
 			} else {
 				break
 			}
 		}
+
+		// if node[i].path == p[0] ||
+		// 	node[i].path[0] == '*' ||
+		// 	node[i].path[0] == ':' {
+		// 	ok = true
+		// 	break
+		// }
+
+		// if node[i].path[0] != '*' && strings.Contains(node[i].path, "*") {
+		// 	//  node path set '/user*'  match /username
+
+		// 	ok, _ = regexp.MatchString(node[i].path, p[0])
+		// 	if !ok {
+		// 		continue
+		// 	} else {
+		// 		break
+		// 	}
+		// }
 	}
 
 	if i == len(node) {
@@ -138,28 +159,6 @@ func matchurl(node []Node, p []string) bool {
 	}
 
 	return ok
-}
-
-func MethodCheck(method string) bool {
-	switch strings.ToUpper(method) {
-	case "GET":
-		return true
-	case "POST":
-		return true
-	case "DELETE":
-		return true
-	case "PATCH":
-		return true
-	case "PUT":
-		return true
-	case "HEAD":
-		return true
-	}
-	return false
-}
-
-func (t *Tree) Del(path string) {
-
 }
 
 func (t *Tree) Destroy() {

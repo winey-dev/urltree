@@ -30,7 +30,7 @@ func (m mark) String(i int) string {
 	case 4:
 		return string(m.m4)
 	case 5:
-		return string("   ")
+		return string("    ")
 	}
 
 	return ""
