@@ -154,3 +154,46 @@ func (t *Tree) Destroy() {
 	}
 	delete(treeArray, t.name)
 }
+
+func StrCompare(s, substr string) bool {
+	var sep string = "*"
+	var key string
+	var sepIsPre bool = false
+	var sepIsSuf bool = false
+
+	if s == substr {
+		return true
+	}
+
+	if s == sep {
+		/*all true*/
+		return true
+	}
+
+	key = s
+	if strings.HasPrefix(s, sep) == true {
+		sepIsPre = true
+		key = key[1:]
+	}
+	if strings.HasSuffix(s, sep) == true {
+		sepIsSuf = true
+		key = key[:len(key)-1]
+	}
+
+	if strings.Contains(substr, key) == true {
+
+		if sepIsPre == true && sepIsSuf == true {
+			return true
+		}
+
+		if sepIsPre == true && strings.HasSuffix(substr, key) == true {
+			return true
+		}
+
+		if sepIsSuf == true && strings.HasPrefix(substr, key) == true {
+			return true
+		}
+	}
+
+	return false
+}
